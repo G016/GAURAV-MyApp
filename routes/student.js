@@ -11,7 +11,7 @@ router.get('/amazon', function(req, res, next) {
 router.get('/:da-:ta', function(req, res, next) {
     // res.render('index', { title: 'Express' });
     console.log(req.params.da)
-    res.json({name:req.params.da + " " + req.params.ta + " are bestfriends"})
+    res.json({name:req.params.da + " and " + req.params.ta + " are bestfriends"})
   });
   
   router.get('/:da', function(req, res, next) {
