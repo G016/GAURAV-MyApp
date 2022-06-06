@@ -1,2 +1,17 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<h1>Welcome to {{title}}</h1>
+
+<div class="title">
+    <div class="content">
+        {{#if email}}
+            <h3>Thank you for signing up with {{email}} </h3>
+        {{else}}
+            <h1>Sign Up Form</h1>
+            <form action="/signup" method="post">
+                <div class="email">
+                    <input type="email" name="emailInput" id="" placeholder="Email Address">
+                    <button type="submit">Submit</button>
+                </div>
+            </form>
+        {{/if}}
+    </div>
+</div>
