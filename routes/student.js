@@ -4,8 +4,8 @@ var router = express.Router();
 /* GET home page. */
 router.get('/data', function (req, res, next) {
   // res.render('index', { title: 'Express' });
-  console.log(req)
-  res.json({ name: "KCC Tier-3 College" })
+  console.log(req);
+  res.json({ name: "KCC Tier-3 College" });
 });
 
 router.get('/:da-:ta-:ch', function (req, res, next) {

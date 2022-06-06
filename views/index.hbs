@@ -1,14 +1,14 @@
-<h1>Welcome to {{title}}</h1>
-
 <div class="title">
     <div class="content">
-        {{#if email}}
-            <h3>Thank you for signing up with {{email}} </h3>
+        {{#if name}}
+            <h2>Thank you for signing up with {{email}}. Welcome {{name}} to the Tier-3 college </h2>
         {{else}}
-            <h1>Sign Up Form</h1>
+            <h1>Welcome to {{title}}</h1>
+            <h2>Sign Up Form</h2>
             <form action="/signup" method="post">
                 <div class="email">
-                    <input type="email" name="emailInput" id="" placeholder="Email Address">
+                    <input type="text" name="nameInput" id="" placeholder="Enter your name"><br><br>
+                    <input type="email" name="emailInput" id="" placeholder="Email Address"><br><br>
                     <button type="submit">Submit</button>
                 </div>
             </form>
