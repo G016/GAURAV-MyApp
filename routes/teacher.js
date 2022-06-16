@@ -10,6 +10,8 @@ var con = mysql.createConnection({
   database: "kccStudent"
 });
 
+con.connect()
+
 
 router.get('/', function (req, res, next) {
   res.render('teacher', { sponser: "Dream Big Dream11" });
@@ -23,7 +25,33 @@ router.get('/', function (req, res, next) {
     console.log("Connected!");
   });
   console.log("Raghav Jhunjhunwala")
-  
+
+});
+
+router.get('/getLogin', function (req, res, next) {
+  // console.log(req.query)
+  // con.connect()
+  con.query("select * from form", function (err, result) {
+    if (err) throw err;
+    console.log(result);
+    res.render('teacher', { "data": result })
+  });
+
+});
+
+router.post('/updateLogin', function (req, res, next) {
+  console.log(req.body)
+  res.json({ "Name": "Hello" })
+});
+
+router.post('/deleteLogin', function (req, res, next) {
+  console.log(req.body.id)
+  // res.json({ "Name": "Hello" })
+  con.query("DELETE FROM form where id =" + req.body.id, function (err, result) {
+    if (err) res.json({ code: 0 });
+    console.log(result);
+    res.json({ code: 1 })
+  });
 });
 
 

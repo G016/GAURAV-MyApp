@@ -1,5 +1,4 @@
-
-<h1> {{sponser}} </h1>
+{{!-- <h1> {{sponser}} </h1>
 
 <form action="/teacher/signin" method="post">
     <div class="email">
@@ -7,4 +6,68 @@
         <input type="email" name="emailID" id="" placeholder="Email Address"><br><br>
         <button type="submit">Submit</button>
     </div>
-</form>
+</form> --}}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<body>
+
+    <table>
+        <tr>
+            <td>Id Number</td>
+            <td>Name</td>
+            <td>Delete</td>
+            <td>Update</td>
+        </tr>
+        {{#data}}
+
+        <tr>
+            <form action="/teacher/updateLogin" method="post">
+                <td><input type="text" name="id" id="" value="{{id}}"></td>
+                <td><input type="text" name="name" id="" value="{{name}}"></td>
+                {{!-- <td><button>Delete</button></td>
+                <td><button>Update</button></td> --}}
+                <td><input type="button" value="Delete" class="btn-delete" id="{{id}}"></td>
+                <td><input type="button" value="Update" class="btn-update" id="{{id}}"></td>
+            </form>
+        </tr>
+
+        {{/data}}
+
+    </table>
+</body>
+<script>
+    $(".btn-update").click((event) => {
+        console.log($("form." + event.target.id).serializeArray())
+        console.log($(event.target).closest('form').serializeArray())
+        $.post('/teacher/updateLogin', $("form." + event.target.id).serializeArray()).then((data) => {
+            if (data.code == 1) {
+                location.reload();
+            } else {
+                alert("Data not found!")
+            }
+        })
+        console.log(event.target.id)
+    })
+    $(".btn-delete").click((event) => {
+        {{!-- alert("Do you want to delete this") --}}
+        $.post('/teacher/deleteLogin', { id: event.target.id }).then((data) => {
+            if (data.code == 1) {
+                location.reload();
+            } else {
+                alert("No data to update")
+            }
+        })
+    })
+</script>
+
+</html>
