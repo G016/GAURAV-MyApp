@@ -8,33 +8,34 @@ router.get('/', function (req, res, next) {
   // res.json({name:"RITIK KUMAR"})
 });
 
-router.post('/add', function (req, res, next) {
+router.all('/add', function (req, res, next) {
   console.log("Adding two number");
   console.log(req.body);
-  var num1 = Number(req.body.a);
-  var num2 = Number(req.body.b);
+  var num1 = parseFloat(req.body.a);
+  var num2 = parseFloat(req.body.b);
+  console.log(num1);
+  console.log(num2);
   var result = num1 + num2;
   console.log(result);
-  // res.json(result);
-  res.render('index', { total: result });
+  res.json(result);
 })
 
-router.post('/sub', function (req, res, next) {
+router.all('/sub', function (req, res, next) {
   console.log(req.body);
-  var num1 = Number(req.body.a);
-  var num2 = Number(req.body.b);
+  var num1 = parseFloat(req.body.a);
+  var num2 = parseFloat(req.body.b);
   var result = num1 - num2;
   console.log(result);
-  res.render('index', { total: result });
+  res.json(result);
 })
 
-router.post('/mul', function (req, res, next) {
+router.all('/mul', function (req, res, next) {
   console.log(req.body);
-  var num1 = Number(req.body.a);
-  var num2 = Number(req.body.b);
+  var num1 = parseFloat(req.body.a);
+  var num2 = parseFloat(req.body.b);
   var result = num1 * num2;
   console.log(result);
-  res.render('index', { total: result });
+  res.json(result);
 })
 
 router.post('/signup', (req, res) => {
