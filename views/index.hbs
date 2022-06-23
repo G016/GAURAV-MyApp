@@ -31,80 +31,6 @@
 
 <body>
 
-    <style>
-        .container {
-            height: 100vh;
-            width: 100%;
-        }
-
-        .calc_title {
-            text-align: center;
-            padding: 20px;
-            margin-bottom: 10px;
-        }
-
-        .calc_title span {
-            border: 2px solid red;
-            padding: 5px 15px;
-            font-size: 20px;
-            font-weight: 700;
-        }
-
-        .calc_body {
-            text-align: center;
-        }
-
-        .calc_body label {
-            font-size: 18px;
-            font-weight: 600;
-        }
-
-        input {
-            padding: 5px;
-            border: 2px solid black;
-        }
-
-        button {
-            margin-right: 5px;
-            background-color: red;
-            padding: 6px 10px;
-            font-family: inherit;
-            font-size: 16px;
-            color: white;
-            border: 2px solid black;
-            cursor: pointer;
-        }
-
-        .answer {
-            margin-top: 22px;
-            font-size: 22px;
-            font-weight: 600;
-            letter-spacing: 0.3px;
-        }
-
-        .history {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 25px;
-        }
-
-        caption {
-            font-size: 20px;
-            letter-spacing: .5px;
-            font-weight: 600;
-        }
-
-        table,
-        th,
-        td {
-            border: 1px solid black;
-            text-align: centre;
-            font-size: 22px;
-            padding: 8px;
-        }
-    </style>
-
     <div class="container">
         <div class="calc">
             <div class="calc_title"><span>KCC CALCULATOR</span></div>
@@ -118,31 +44,35 @@
                     <button class="sub" id="sub">SUBTRACT</button>
                     <button class="mul" id="mul">MULTIPLY</button><br><br>
 
-                    <div class="answer">Result : </div>
+                    <div class="answer" id="ans">Result : </div>
 
                 </div>
             </form>
 
             <div class="history">
-                <table>
+                <table class="hist_tb">
                     <caption>HISTORY</caption>
-                    <tr>
-                        <th>Num 1</th>
-                        <th>Num 2</th>
-                        <th>Operation</th>
-                        <th>Result</th>
-                        <th>Operator</th>
-                        <th>Submit</th>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>Num 1</th>
+                            <th>Num 2</th>
+                            <th>Operation</th>
+                            <th>Result</th>
+                            <th>Operator</th>
+                            <th>Submit</th>
+                        </tr>
+                    </thead>
 
-                    <tr>
-                        <td class="n1"></td>
-                        <td class="n2"></td>
-                        <td class="op"></td>
-                        <td class="res"></td>
-                        <td class="sop"></td>
-                        <td class="btn"></td>
-                    </tr>
+                    <tbody>
+                        {{!-- <tr>
+                            <td class="n1"></td>
+                            <td class="n2"></td>
+                            <td class="op"></td>
+                            <td class="res"></td>
+                            <td class="sop"></td>
+                            <td class="btn"></td>
+                        </tr> --}}
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -154,20 +84,15 @@
                 event.preventDefault();
                 var x = $(".num1").val();
                 var y = $(".num2").val();
-                var r = $('<input type="button" value="Submit"/>');
-                var s = $('<select><option value="+">+</option><option value="-">-</option><option value="*">*</option></select>')
                 $.post({ url: "/add", data: { a: x, b: y } }).then((data) => {
                     console.log(data);
                     if (x == "" || y == "") {
                         alert("Enter num1 and num2");
                     }
                     else {
-                        $(".n1").append('<p>' + x + '</p>');
-                        $(".n2").append('<p>' + y + '</p>');
-                        $(".op").append('<p> + <p>');
-                        $(".res").append('<p>' + data + '</p>');
-                        $(".btn").append(r);
-                        $(".sop").append(s);
+                        $('#ans').empty().append('Result : ' + data);
+                        var hist_data = "<tr><td>" + x + "</td><td>" + y + "</td><td>" + "+" + "</td><td>" + data + "</td><td> <select id='oper'><option value='+'>+</option><option value='-'>-</option><option value='*'>*</option></select> </td><td>" + " <button>Submit</button> </td></tr>";
+                        $(".hist_tb tbody").append(hist_data);
                     }
                 });
             });
@@ -183,10 +108,9 @@
                     alert("Enter num1 and num2");
                 }
                 else {
-                    $(".n1").append('<p>' + x + '</p>');
-                    $(".n2").append('<p>' + y + '</p>');
-                    $(".op").append('<p> - <p>');
-                    $(".res").append('<p>' + data + '</p>');
+                    $('#ans').empty().append('Result : ' + data);
+                    var hist_data = "<tr><td>" + x + "</td><td>" + y + "</td><td>" + "-" + "</td><td>" + data + "</td><td> <select id='oper'><option value='+'>+</option><option value='-'>-</option><option value='*'>*</option></select> </td><td>" + " <button>Submit</button> </td></tr>";
+                    $(".hist_tb tbody").append(hist_data);
                 }
             });
         });
@@ -201,10 +125,9 @@
                     alert("Enter num1 and num2");
                 }
                 else {
-                    $(".n1").append('<p>' + x + '</p>');
-                    $(".n2").append('<p>' + y + '</p>');
-                    $(".op").append('<p> * <p>');
-                    $(".res").append('<p>' + data + '</p>');
+                    $('#ans').empty().append('Result : ' + data);
+                    var hist_data = "<tr><td>" + x + "</td><td>" + y + "</td><td>" + "*" + "</td><td>" + data + "</td><td> <select id='oper'><option value='+'>+</option><option value='-'>-</option><option value='*'>*</option></select> </td><td>" + " <button>Submit</button> </td></tr>";
+                    $(".hist_tb tbody").append(hist_data);
                 }
             });
         });
