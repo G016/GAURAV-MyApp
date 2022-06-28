@@ -10,12 +10,22 @@ var con = mysql.createPool({
   database: 'kccStudent'
 });
 
+// =================================== Calculator JS Starting =============================
+
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  res.render('index', { title: 'Fake Institute of Technology' });
+  // res.render('index', { title: 'Fake Institute of Technology' });
   // console.log(req)
   // res.json({name:"RITIK KUMAR"})
+  con.getConnection(function (err, connection) {
+    connection.query("SELECT * FROM  ritik_cal ORDER BY id", function (err, results) {
+      if (err) throw err;
+      else console.log(results);
+      res.render('index', { "data": results, title: 'Fake Institute of Technology' });
+    });
+  });
 });
+
 
 router.all('/add', function (req, res, next) {
   console.log("Adding two number");
@@ -72,6 +82,63 @@ router.all('/mul', function (req, res, next) {
     });
   });
 });
+
+// Calculating data from table 
+router.post('/updateData', function (req, res, next) {
+  console.log(req.body)
+  con.getConnection(function (err, connection) {
+    connection.query("SELECT * FROM  ritik_cal ORDER BY id", function (err, results) {
+      if (err) throw err;
+      else console.log(results);
+      res.json(results)
+    });
+  });
+});
+
+// Calculated data from table now inserting in table
+router.all('/insertUpdate', function (req, res, next) {
+  console.log(req.body);
+  var num1 = req.body.a;
+  var num2 = req.body.b;
+  var optr = req.body.op;
+  var result = req.body.rest;
+
+  // if operator === "+"
+  if(optr === '+'){
+    con.getConnection(function (err, connection) {
+      connection.query("INSERT INTO ritik_cal (num1, num2 , op, res) VALUES ('" + num1 + "', '" + num2 + "','" + optr + "','" + result + "')", function (err, rows) {
+        connection.release();
+        if (err) throw err;
+        else console.log(rows.length);
+      });
+    });
+  }
+
+  // if operator === "-"
+  if(optr === '-'){
+    con.getConnection(function (err, connection) {
+      connection.query("INSERT INTO ritik_cal (num1, num2 , op, res) VALUES ('" + num1 + "', '" + num2 + "','" + optr + "','" + result + "')", function (err, rows) {
+        connection.release();
+        if (err) throw err;
+        else console.log(rows.length);
+      });
+    });
+  }
+
+  // if operator === "*"
+  if(optr === '*'){
+    con.getConnection(function (err, connection) {
+      connection.query("INSERT INTO ritik_cal (num1, num2 , op, res) VALUES ('" + num1 + "', '" + num2 + "','" + optr + "','" + result + "')", function (err, rows) {
+        connection.release();
+        if (err) throw err;
+        else console.log(rows.length);
+      });
+    });
+  }
+
+});
+
+// ==================================== Calculator JS Ending ================================
 
 router.post('/signup', (req, res) => {
   var em = req.body.emailInput;

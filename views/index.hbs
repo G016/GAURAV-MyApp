@@ -58,27 +58,48 @@
                             <th>Num 2</th>
                             <th>Operation</th>
                             <th>Result</th>
-                            <th>Operator</th>
+                            <th>
+                                <select class="oper">
+                                    <option value="+">+</option>
+                                    <option value="-">-</option>
+                                    <option value="*">*</option>
+                                </select>
+                            </th>
                             <th>Submit</th>
                         </tr>
                     </thead>
 
+
                     <tbody>
-                        {{!-- <tr>
-                            <td class="n1"></td>
-                            <td class="n2"></td>
-                            <td class="op"></td>
-                            <td class="res"></td>
-                            <td class="sop"></td>
-                            <td class="btn"></td>
-                        </tr> --}}
+                        {{#data}}
+                        <tr>
+                            <td>{{num1}}</td>
+                            <td>{{num2}}</td>
+                            <td>{{op}}</td>
+                            <td>{{res}}</td>
+                            <td>
+                                {{!-- <select class="oper">
+                                    <option value="+">+</option>
+                                    <option value="-">-</option>
+                                    <option value="*">*</option>
+                                </select> --}}
+                            </td>
+                            <td>
+                                <button class="submitBtn" id="{{id}}">Submit</button>
+                            </td>
+                        </tr>
+                        {{/data}}
                     </tbody>
                 </table>
             </div>
+
+            <footer>Made with Hand by RITIK *_*</footer>
         </div>
     </div>
 
     <script>
+
+
         $(document).ready(() => {
             $("#add").click(function (event) {
                 event.preventDefault();
@@ -91,46 +112,92 @@
                     }
                     else {
                         $('#ans').empty().append('Result : ' + data);
-                        var hist_data = "<tr><td>" + x + "</td><td>" + y + "</td><td>" + "+" + "</td><td>" + data + "</td><td> <select id='oper'><option value='+'>+</option><option value='-'>-</option><option value='*'>*</option></select> </td><td>" + " <button>Submit</button> </td></tr>";
+                        var hist_data = "<tr><td>" + x + "</td><td>" + y + "</td><td>" + "+" + "</td><td>" + data + "</td><td>" + "</td><td>" + "<button class='submitBtn'>Submit</button> </td></tr>";
                         $(".hist_tb tbody").append(hist_data);
                     }
                 });
             });
         });
 
-        $("#sub").click(function (event) {
-            event.preventDefault();
-            var x = $(".num1").val();
-            var y = $(".num2").val();
-            $.post({ url: "/sub", data: { a: x, b: y } }).then((data) => {
-                console.log(data);
-                if (x == "" || y == "") {
-                    alert("Enter num1 and num2");
-                }
-                else {
-                    $('#ans').empty().append('Result : ' + data);
-                    var hist_data = "<tr><td>" + x + "</td><td>" + y + "</td><td>" + "-" + "</td><td>" + data + "</td><td> <select id='oper'><option value='+'>+</option><option value='-'>-</option><option value='*'>*</option></select> </td><td>" + " <button>Submit</button> </td></tr>";
-                    $(".hist_tb tbody").append(hist_data);
-                }
+        $(document).ready(() => {
+            $("#sub").click(function (event) {
+                event.preventDefault();
+                var x = $(".num1").val();
+                var y = $(".num2").val();
+                $.post({ url: "/sub", data: { a: x, b: y } }).then((data) => {
+                    console.log(data);
+                    if (x == "" || y == "") {
+                        alert("Enter num1 and num2");
+                    }
+                    else {
+                        $('#ans').empty().append('Result : ' + data);
+                        var hist_data = "<tr><td>" + x + "</td><td>" + y + "</td><td>" + "-" + "</td><td>" + data + "</td><td>" + "</td><td>" + "<button class='submitBtn'>Submit</button> </td></tr>";
+                        $(".hist_tb tbody").append(hist_data);
+                    }
+                });
             });
         });
 
-        $("#mul").click(function (event) {
-            event.preventDefault();
-            var x = $(".num1").val();
-            var y = $(".num2").val();
-            $.post({ url: "/mul", data: { a: x, b: y } }).then((data) => {
-                console.log(data);
-                if (x == "" || y == "") {
-                    alert("Enter num1 and num2");
-                }
-                else {
-                    $('#ans').empty().append('Result : ' + data);
-                    var hist_data = "<tr><td>" + x + "</td><td>" + y + "</td><td>" + "*" + "</td><td>" + data + "</td><td> <select id='oper'><option value='+'>+</option><option value='-'>-</option><option value='*'>*</option></select> </td><td>" + " <button>Submit</button> </td></tr>";
-                    $(".hist_tb tbody").append(hist_data);
-                }
+        $(document).ready(() => {
+            $("#mul").click(function (event) {
+                event.preventDefault();
+                var x = $(".num1").val();
+                var y = $(".num2").val();
+                $.post({ url: "/mul", data: { a: x, b: y } }).then((data) => {
+                    console.log(data);
+                    if (x == "" || y == "") {
+                        alert("Enter num1 and num2");
+                    }
+                    else {
+                        $('#ans').empty().append('Result : ' + data);
+                        var hist_data = "<tr><td>" + x + "</td><td>" + y + "</td><td>" + "*" + "</td><td>" + data + "</td><td>" + "</td><td>" + "<button class='submitBtn'>Submit</button> </td></tr>";
+                        $(".hist_tb tbody").append(hist_data);
+                    }
+                });
             });
         });
+
+
+        $('.submitBtn').click(function (event) {
+            $.post('/updateData', $("ritik_cal." + event.target.id).serializeArray()).then((data) => {
+                var id = event.target.id;
+                var len = data.length;
+                for (var i = 0; i < len; i++) {
+                    if (data[i].id == id) {
+                        var n1 = data[i].num1;
+                        var n2 = data[i].num2;
+                        var oper = $(".oper").val();
+                        console.log(oper);
+                        if (oper === '+') {
+                            console.log(n1 + n2);
+                            var res = n1 + n2;
+                            $.post({ url: "/insertUpdate", data: { a: n1, b: n2, op: oper, rest: res } }).then((data) => { });
+                            $('#ans').empty().append('Result : ' + res);
+                            var hist_data = "<tr><td>" + n1 + "</td><td>" + n2 + "</td><td>" + "+" + "</td><td>" + res + "</td><td>" + "</td><td>" + "<button class='submitBtn'>Submit</button> </td></tr>";
+                            $(".hist_tb tbody").append(hist_data);
+                        }
+                        if (oper === '-') {
+                            console.log(n1 - n2);
+                            var res = n1 - n2;
+                            $.post({ url: "/insertUpdate", data: { a: n1, b: n2, op: oper, rest: res } }).then((data) => { });
+                            $('#ans').empty().append('Result : ' + res);
+                            var hist_data = "<tr><td>" + n1 + "</td><td>" + n2 + "</td><td>" + "-" + "</td><td>" + res + "</td><td>" + "</td><td>" + "<button class='submitBtn'>Submit</button> </td></tr>";
+                            $(".hist_tb tbody").append(hist_data);
+                        }
+                        if (oper === '*') {
+                            console.log(n1 * n2);
+                            var res = n1 * n2;
+                            $.post({ url: "/insertUpdate", data: { a: n1, b: n2, op: oper, rest: res } }).then((data) => { });
+                            $('#ans').empty().append('Result : ' + res);
+                            var hist_data = "<tr><td>" + n1 + "</td><td>" + n2 + "</td><td>" + "*" + "</td><td>" + res + "</td><td>" + "</td><td>" + "<button class='submitBtn'>Submit</button> </td></tr>";
+                            $(".hist_tb tbody").append(hist_data);
+                        }
+                    }
+                }
+            })
+            console.log(event.target.id)
+        });
+
     </script>
 
 </body>
