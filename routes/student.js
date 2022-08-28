@@ -10,14 +10,14 @@ router.get('/data', function (req, res, next) {
 
 router.get('/login', function (req, res, next) {
   console.log(req.query)
-  // res.send({"name":"Ritik"});
+  // res.send({"name":"Gaurav"});
   res.render('student');
   // res.json({ "Name": "Naam me kya rakha hai" });
 });
 
 router.post('/login', function (req, res, next) {
   console.log(req.body)
-  // res.send({"name":"Coder Ritik"});
+  // res.send({"name":"Coder - Gaurav"});
   // res.render('student');
   res.json({ "Name": req.body });
 });

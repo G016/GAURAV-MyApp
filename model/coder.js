@@ -4,13 +4,13 @@ var a = (d) => {
 
 var func = {
     xyz: (p) => {
-        console.log("Ritik love " + p);
+        console.log("mohan loves " + p);
     },
 }
 
 // const details = {
-//     name: 'Ritik',
-//     contact: 62621762,
+//     name: 'mohan',
+//     contact: 93*******1,
 // }
 
 

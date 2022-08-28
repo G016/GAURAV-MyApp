@@ -14,17 +14,17 @@ con.connect()
 
 
 router.get('/', function (req, res, next) {
-  res.render('teacher', { sponser: "Dream Big Dream11" });
+  res.render('teacher', { sponser: "BGMI (KRAFTON)" });
 
 
-  console.log("Ritik");
+  console.log("Gaurav");
   con.connect(function (err) {
-    console.log("Aniket")
+    console.log("Manoj")
     if (err)
       console.log("err");
     console.log("Connected!");
   });
-  console.log("Raghav Jhunjhunwala")
+  console.log("Jayantilal")
 
 });
 

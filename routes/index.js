@@ -14,14 +14,14 @@ var con = mysql.createPool({
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  // res.render('index', { title: 'Fake Institute of Technology' });
+  // res.render('index', { title: 'KCC Institute of Technology & Management' });
   // console.log(req)
-  // res.json({name:"RITIK KUMAR"})
+  // res.json({name:"GAURAV KUMAR VERMA"})
   con.getConnection(function (err, connection) {
-    connection.query("SELECT * FROM  ritik_cal ORDER BY id", function (err, results) {
+    connection.query("SELECT * FROM  Gaurav_cal ORDER BY id", function (err, results) {
       if (err) throw err;
       else console.log(results);
-      res.render('index', { "data": results, title: 'Fake Institute of Technology' });
+      res.render('index', { "data": results, title: 'Institute of Technology' });
     });
   });
 });
@@ -39,7 +39,7 @@ router.all('/add', function (req, res, next) {
   console.log(result);
   res.json(result);
   con.getConnection(function (err, connection) {
-    connection.query("INSERT INTO ritik_cal (num1, num2 , op, res) VALUES ('" + num1 + "', '" + num2 + "','" + optr + "','" + result + "')", function (err, rows) {
+    connection.query("INSERT INTO Gaurav_cal (num1, num2 , op, res) VALUES ('" + num1 + "', '" + num2 + "','" + optr + "','" + result + "')", function (err, rows) {
       connection.release();
       if (err) throw err;
       else console.log(rows.length);
@@ -57,7 +57,7 @@ router.all('/sub', function (req, res, next) {
   console.log(result);
   res.json(result);
   con.getConnection(function (err, connection) {
-    connection.query("INSERT INTO ritik_cal (num1, num2 , op, res) VALUES ('" + num1 + "', '" + num2 + "','" + optr + "','" + result + "')", function (err, rows) {
+    connection.query("INSERT INTO Gaurav_cal (num1, num2 , op, res) VALUES ('" + num1 + "', '" + num2 + "','" + optr + "','" + result + "')", function (err, rows) {
       connection.release();
       if (err) throw err;
       else console.log(rows.length);
@@ -75,7 +75,7 @@ router.all('/mul', function (req, res, next) {
   console.log(result);
   res.json(result);
   con.getConnection(function (err, connection) {
-    connection.query("INSERT INTO ritik_cal (num1, num2 , op, res) VALUES ('" + num1 + "', '" + num2 + "','" + optr + "','" + result + "')", function (err, rows) {
+    connection.query("INSERT INTO Gaurav_cal (num1, num2 , op, res) VALUES ('" + num1 + "', '" + num2 + "','" + optr + "','" + result + "')", function (err, rows) {
       connection.release();
       if (err) throw err;
       else console.log(rows.length);
@@ -87,7 +87,7 @@ router.all('/mul', function (req, res, next) {
 router.post('/updateData', function (req, res, next) {
   console.log(req.body)
   con.getConnection(function (err, connection) {
-    connection.query("SELECT * FROM  ritik_cal ORDER BY id", function (err, results) {
+    connection.query("SELECT * FROM  Gaurav_cal ORDER BY id", function (err, results) {
       if (err) throw err;
       else console.log(results);
       res.json(results)
@@ -106,7 +106,7 @@ router.all('/insertUpdate', function (req, res, next) {
   // if operator === "+"
   if(optr === '+'){
     con.getConnection(function (err, connection) {
-      connection.query("INSERT INTO ritik_cal (num1, num2 , op, res) VALUES ('" + num1 + "', '" + num2 + "','" + optr + "','" + result + "')", function (err, rows) {
+      connection.query("INSERT INTO Gaurav_cal (num1, num2 , op, res) VALUES ('" + num1 + "', '" + num2 + "','" + optr + "','" + result + "')", function (err, rows) {
         connection.release();
         if (err) throw err;
         else console.log(rows.length);
@@ -117,7 +117,7 @@ router.all('/insertUpdate', function (req, res, next) {
   // if operator === "-"
   if(optr === '-'){
     con.getConnection(function (err, connection) {
-      connection.query("INSERT INTO ritik_cal (num1, num2 , op, res) VALUES ('" + num1 + "', '" + num2 + "','" + optr + "','" + result + "')", function (err, rows) {
+      connection.query("INSERT INTO Gaurav_cal (num1, num2 , op, res) VALUES ('" + num1 + "', '" + num2 + "','" + optr + "','" + result + "')", function (err, rows) {
         connection.release();
         if (err) throw err;
         else console.log(rows.length);
@@ -128,7 +128,7 @@ router.all('/insertUpdate', function (req, res, next) {
   // if operator === "*"
   if(optr === '*'){
     con.getConnection(function (err, connection) {
-      connection.query("INSERT INTO ritik_cal (num1, num2 , op, res) VALUES ('" + num1 + "', '" + num2 + "','" + optr + "','" + result + "')", function (err, rows) {
+      connection.query("INSERT INTO Gaurav_cal (num1, num2 , op, res) VALUES ('" + num1 + "', '" + num2 + "','" + optr + "','" + result + "')", function (err, rows) {
         connection.release();
         if (err) throw err;
         else console.log(rows.length);
@@ -142,7 +142,7 @@ router.all('/insertUpdate', function (req, res, next) {
 
 router.post('/signup', (req, res) => {
   var em = req.body.emailInput;
-  res.render('index', { email: em, name: req.body.nameInput, title: "Product Based Company" });
+  res.render('index', { email: em, name: req.body.nameInput, title: "TCS Based Company" });
 });
 
 module.exports = router;
